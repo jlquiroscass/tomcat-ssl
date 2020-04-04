@@ -71,9 +71,16 @@
                                                                                                                                         OpenSSL style configuration is required as described in the APR/native
                                                                                                                                                  documentation -->
              <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
-                            maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
-                            keystoreFile="/certs/tomcat.p12" keystorePass="Skd5%F" keystoreType="PKCS12"
-                                           clientAuth="false" sslProtocol="TLS" />
+		     maxThreads="150" SSLEnabled="true" scheme="https" secure="true" >
+		     	   <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+			   		 <SSLHostConfig>
+						        <Certificate certificateKeyFile="/certs/privkey.pem"
+								                    certificateFile="/certs/cert.pem"
+										                        certificateChainFile="/certs/chain.pem"
+													                    type="RSA" />
+														    			</SSLHostConfig>
+																</Connector>							<!--  keystoreFile="/certs/tomcat.p12" keystorePass="Skd5%F" keystoreType="PKCS12"
+					   clientAuth="false" sslProtocol="TLS" /> -->
     <!-- Define an AJP 1.3 Connector on port 8009 -->
         <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
             <!-- An Engine represents the entry point (within Catalina) that processes
